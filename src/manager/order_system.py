@@ -104,7 +104,9 @@ def take_order():
     
     while True:
         item = input("Add item: ").strip()
-        if item.lower() == 'done':
+        print('Do you want to add more item?')
+        ch = input('yes or no: ')
+        if ch.lower() == 'no':
             break
             
         menu_item = get_menu_item_by_number(item)
@@ -146,7 +148,7 @@ def print_order(order):
         print(f"Order ID: #{order['order_id']}")
         print(f"Date: {order['datetime']}")
         print(f"Customer: {order['customer']}")
-        pr1int("\nOrdered Items:")
+        print("\nOrdered Items:")
         for item in order['items']:
             print(f"  - {item:<15} Rs{menu[item]:>4}")
         print("-" * 40)
