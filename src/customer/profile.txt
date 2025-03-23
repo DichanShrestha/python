@@ -1,2 +1,0 @@
-101,John,john@example.com
-102,Mary,mary@example.com

@@ -1,7 +1,7 @@
 from src.admin.manage_staff import manage_staff
 from src.admin.view_feedback import view_feedback
 from src.admin.view_sales_report import view_sales_report
-from src.manager.order_system import manager
+
 def choose_role():
     print("Resutrant management system")
     print("===========================")
@@ -31,8 +31,8 @@ def choose_role():
             print("Invalid choice.")
 
     elif choice == 2:
-        manager()
-        # print()
+        # manager()
+        print()
     elif choice == 3:
         print("Choose an option (1/2/3/4)")
         print("1. View Orders")
