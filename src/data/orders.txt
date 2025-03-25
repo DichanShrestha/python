@@ -5,3 +5,10 @@ ITEM:Momo
 ITEM:Keema Noodles
 TOTAL:420.0
 
+Order ID: ORD_2025-03-25_15:25:17
+Items:
+- Potato: 5 kg
+- tomatoes: 10 kg
+Status: Pending
+Date: 2025-03-25 15:25:17
+------------------------------

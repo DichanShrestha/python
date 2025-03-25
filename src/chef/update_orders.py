@@ -1,4 +1,4 @@
-order_file = 'D:/py_proj/src/data/orders.txt'
+order_file = 'src/data/orders.txt'
 
 def update_order_status(order_id):
     # Check if file exists
