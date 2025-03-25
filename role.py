@@ -8,7 +8,8 @@ from src.chef.request_ingredients import req_ingredient
 def choose_role():
     print("Resutrant management system")
     print("===========================")
-    print("Choose an option (1/2/3/4) ")
+    print("Choose an option (0/1/2/3/4) ")
+    print("0. Exit")
     print("1. Admin")
     print("2. Manager")
     print("3. Chef") 
@@ -42,7 +43,12 @@ def choose_role():
     #    manager main
     elif choice == 3:
        req_ingredient()
+       choose_role()
     elif choice == 4:
         customer_main() 
+        choose_role()
+    # elif choice == 0:
+    #     break
     else:
         print("Invalid choice.") 
+        choose_role()
