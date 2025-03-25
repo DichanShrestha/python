@@ -1,17 +1,19 @@
 order_file = 'D:/py_proj/src/data/orders.txt'
-import os
 
 def update_order_status(order_id):
-    if not os.path.exists(order_file):
+    # Check if file exists
+    try:
+        file = open(order_file, 'r')
+        lines = file.readlines()
+        file.close()
+    except FileNotFoundError:
         print("No orders file exists.")
         return
-    
-    with open(order_file, 'r') as file:
-        lines = file.readlines()
-    
+        
     updated_lines = []
     i = 0
     found = False
+    new_status = ""
     
     while i < len(lines):
         line = lines[i].strip()
@@ -23,7 +25,7 @@ def update_order_status(order_id):
             while i < len(lines) and not lines[i].strip().startswith("Status:"):
                 updated_lines.append(lines[i])
                 i += 1
-            
+                
             # Update the status
             print("\nCurrent status:", lines[i].strip().split(": ")[1])
             print("1. Mark as Completed")
@@ -43,7 +45,7 @@ def update_order_status(order_id):
             i += 1  # Skip the old status line
             
             # Copy remaining lines of this order
-            while i < len(lines) and not lines[i].strip().startswith("Order ID:"):
+            while i < len(lines) and lines[i].strip() and not lines[i].strip().startswith("Order ID:"):
                 updated_lines.append(lines[i])
                 i += 1
         else:
@@ -54,7 +56,11 @@ def update_order_status(order_id):
         print(f"Order ID '{order_id}' not found.")
         return
     
-    with open(order_file, 'w') as file:
+    # Write updated content back to file
+    try:
+        file = open(order_file, 'w')
         file.writelines(updated_lines)
-    
-    print(f"Order status updated successfully to: {new_status}")
+        file.close()
+        print(f"Order status updated successfully to: {new_status}")
+    except:
+        print("Error writing to file.")
