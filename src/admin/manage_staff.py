@@ -1,13 +1,15 @@
-import os
 # File to store staff data
 STAFF_DATA_FILE = 'src/data/admin_data.txt'
 
 # A function to read all the staff data from the file
 def read_staff_data():
     staff_data = []
-    if os.path.exists(STAFF_DATA_FILE):
+    try:
         with open(STAFF_DATA_FILE, 'r') as file:
             staff_data = file.readlines()
+    except FileNotFoundError:
+        # If file doesn't exist, return empty list
+        pass
     return staff_data
 
 # A function to write staff data back to the file
