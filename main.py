@@ -1,3 +1,3 @@
-from role import choose_role
+from authentication import main
 
-choose_role()
+main()
