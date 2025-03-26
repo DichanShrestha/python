@@ -2,7 +2,7 @@
 
 import os
 from datetime import datetime
-from update_orders import update_order_status
+from src.chef.update_orders import update_order_status
 
 request = 'src/data/ingredient_request.txt'
 order_file = 'src/data/orders.txt'
