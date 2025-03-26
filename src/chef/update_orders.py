@@ -1,66 +1,45 @@
-order_file = 'D:/py_proj/src/data/orders.txt'
+import os
 
 def update_order_status(order_id):
-    # Check if file exists
-    try:
-        file = open(order_file, 'r')
+    order_file = 'src/data/orders.txt'
+    
+    if not os.path.exists(order_file):
+        print("No orders file found.")
+        return False
+    
+    with open(order_file, 'r') as file:
         lines = file.readlines()
-        file.close()
-    except FileNotFoundError:
-        print("No orders file exists.")
-        return
-        
-    updated_lines = []
-    i = 0
-    found = False
-    new_status = ""
     
-    while i < len(lines):
-        line = lines[i].strip()
-        if line.startswith("Order ID:") and order_id in line:
-            found = True
-            updated_lines.append(line + '\n')
-            # Copy lines until we find the Status line
-            i += 1
-            while i < len(lines) and not lines[i].strip().startswith("Status:"):
-                updated_lines.append(lines[i])
-                i += 1
-                
-            # Update the status
-            print("\nCurrent status:", lines[i].strip().split(": ")[1])
-            print("1. Mark as Completed")
-            print("2. Mark as In Progress")
-            print("3. Mark as Cancelled")
-            choice = input("Enter your choice (1-3): ").strip()
+    updated = False
+    new_lines = []
+    
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
             
-            new_status = "Pending"
-            if choice == "1":
-                new_status = "Completed"
-            elif choice == "2":
-                new_status = "In Progress"
-            elif choice == "3":
-                new_status = "Cancelled"
+        # Split the comma-separated values
+        parts = line.split(',')
+        if len(parts) >= 5:  # Ensure we have all required parts
+            current_order_id = parts[0]
+            status_index = 4  # Pending/Completed is the 5th element
             
-            updated_lines.append(f"Status: {new_status}\n")
-            i += 1  # Skip the old status line
-            
-            # Copy remaining lines of this order
-            while i < len(lines) and lines[i].strip() and not lines[i].strip().startswith("Order ID:"):
-                updated_lines.append(lines[i])
-                i += 1
+            if current_order_id == order_id:
+                # Update the status to Completed
+                parts[status_index] = "Completed"
+                updated_line = ','.join(parts)
+                new_lines.append(updated_line + '\n')
+                updated = True
+            else:
+                new_lines.append(line + '\n')
         else:
-            updated_lines.append(lines[i])
-            i += 1
+            new_lines.append(line + '\n')
     
-    if not found:
-        print(f"Order ID '{order_id}' not found.")
-        return
-    
-    # Write updated content back to file
-    try:
-        file = open(order_file, 'w')
-        file.writelines(updated_lines)
-        file.close()
-        print(f"Order status updated successfully to: {new_status}")
-    except:
-        print("Error writing to file.")
+    if updated:
+        with open(order_file, 'w') as file:
+            file.writelines(new_lines)
+        print(f"Order {order_id} status updated to Completed.")
+        return True
+    else:
+        print(f"Order {order_id} not found. Please check the ID and try again.")
+        return False
